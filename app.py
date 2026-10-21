@@ -177,12 +177,12 @@ def event_spec(mode):
     }
     mode_key = str(mode).strip()
 
-if mode_key not in specs:
-    st.error(f"找不到模擬模式：{mode_key!r}")
-    st.error(f"目前支援的模式：{list(specs.keys())}")
-    st.stop()
+    if mode_key not in specs:
+        st.error(f"找不到模擬模式：{mode_key!r}")
+        st.error(f"目前支援的模式：{list(specs.keys())}")
+        st.stop()
 
-return specs[mode_key]
+    return specs[mode_key]
 
 
 # ============================================================
@@ -263,7 +263,7 @@ if st.session_state.last_run_signature != (int(total_n), int(seed)):
 # ============================================================
 # 4. 直方圖比較模式
 # ============================================================
-if mode == "比較：X 與 Z（Part II e）":
+if mode == "比較：X 與 Z":
     st.title("📊 比較：不歸還抽樣 X 與歸還抽樣 Z")
     st.markdown("兩者平均值相同，但抽樣方式不同，因而具有不同的變異數與分布。")
     c1, c2 = st.columns(2)
@@ -293,7 +293,7 @@ if mode == "比較：X 與 Z（Part II e）":
     st.dataframe(comparison, use_container_width=True, hide_index=True)
     st.info("兩者理論平均皆為 2；歸還抽樣的理論變異數較大（1.6），不歸還抽樣的變異數較小（約 1.3846）。")
 
-elif mode == "比較：Y、K、J（Part II e）":
+elif mode == "比較：Y、K、J":
     st.title("📡 比較：Y、K、J 三種網路封包實驗")
     st.markdown("Y 是第一次成功所需次數；K 是固定 10 次內的成功數；J 是第三次成功所需總次數。")
     specs = [
