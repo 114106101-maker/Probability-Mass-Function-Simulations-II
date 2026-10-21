@@ -138,7 +138,7 @@ def make_histogram(values, support, pmf, x_title, title):
 
 def event_spec(mode):
     specs = {
-        "X：不歸還抽樣（原功能）": {
+        "X：不歸還抽樣": {
             "key": "X", "label": "P(X = 3)", "event": lambda a: a == 3,
             "theory_event": hypergeom_pmf(3), "mean": 2.0, "mean_label": "E(X)",
             "support": list(range(9)), "pmf": hypergeom_pmf,
