@@ -174,8 +174,14 @@ def event_spec(mode):
             "x_title": "J = 第三次成功所需總傳輸次數", "title": "J 的相對次數直方圖",
             "description": "持續重傳直到第三次成功，J 為總傳輸次數；J 服從負二項分布。",
         },
-    }
-    return specs[mode]
+    }mode_key = str(mode).strip()
+
+if mode_key not in specs:
+    st.error(f"找不到模擬模式：{mode_key!r}")
+    st.error(f"目前支援的模式：{list(specs.keys())}")
+    st.stop()
+
+return specs[mode_key]
 
 
 # ============================================================
