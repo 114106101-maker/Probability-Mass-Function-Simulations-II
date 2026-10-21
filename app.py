@@ -138,21 +138,21 @@ def make_histogram(values, support, pmf, x_title, title):
 
 def event_spec(mode):
     specs = {
-        "X：不歸還抽樣": {
+        "X：不歸還抽樣（原功能）": {
             "key": "X", "label": "P(X = 3)", "event": lambda a: a == 3,
             "theory_event": hypergeom_pmf(3), "mean": 2.0, "mean_label": "E(X)",
             "support": list(range(9)), "pmf": hypergeom_pmf,
             "x_title": "X = 抽到的缺陷程式數", "title": "X 的相對次數直方圖",
             "description": "每次不歸還地隨機抽取 10 個程式，X 為抽到的缺陷程式數。",
         },
-        "Z：歸還抽樣": {
+        "Z：歸還抽樣（Part II d）": {
             "key": "Z", "label": "P(Z = 3)", "event": lambda a: a == 3,
             "theory_event": binom_pmf(3, 10, 0.2), "mean": 2.0, "mean_label": "E(Z)",
             "support": list(range(11)), "pmf": lambda a: binom_pmf(a, 10, 0.2),
             "x_title": "Z = 抽到的缺陷程式數", "title": "Z 的相對次數直方圖",
             "description": "每次抽取後歸還，再獨立抽取 10 次；Z ~ Binomial(10, 0.2)。",
         },
-        "K：固定傳輸 10 次": {
+        "K：固定傳輸 10 次（Part II c）": {
             "key": "K", "label": "P(K > 3)", "event": lambda a: a > 3,
             "theory_event": 1 - sum(binom_pmf(i, 10, 0.8) for i in range(4)),
             "mean": 8.0, "mean_label": "E(K)", "support": list(range(11)),
@@ -160,14 +160,14 @@ def event_spec(mode):
             "title": "K 的相對次數直方圖",
             "description": "固定傳輸 10 次，K 為成功次數；K ~ Binomial(10, 0.8)。",
         },
-        "Y：重傳直到第一次成功": {
+        "Y：重傳直到第一次成功（原功能）": {
             "key": "Y", "label": "P(Y > 3)", "event": lambda a: a > 3,
             "theory_event": 0.2**3, "mean": 1.25, "mean_label": "E(Y)",
             "support": list(range(1, 11)), "pmf": geom_pmf,
             "x_title": "Y = 第一次成功所需傳輸次數", "title": "Y 的相對次數直方圖",
             "description": "持續重傳直到第一次成功，Y 為所需傳輸次數；Y ~ Geometric(0.8)。",
         },
-        "J：重傳直到第三次成功": {
+        "J：重傳直到第三次成功（Part II d）": {
             "key": "J", "label": "平均傳輸次數", "event": None,
             "theory_event": None, "mean": 3.75, "mean_label": "E(J)",
             "support": list(range(3, 16)), "pmf": lambda a: negbin_total_pmf(a, 3, 0.8),
@@ -182,13 +182,13 @@ def event_spec(mode):
 # 3. 側邊欄：原控制功能 + 新增實驗
 # ============================================================
 MODES = [
-    "X：不歸還抽樣",
-    "Z：歸還抽樣",
-    "K：固定傳輸 10 次",
-    "Y：重傳直到第一次成功",
-    "J：重傳直到第三次成功",
-    "比較：X 與 Z",
-    "比較：Y、K、J",
+    "X：不歸還抽樣（原功能）",
+    "Z：歸還抽樣（Part II d）",
+    "K：固定傳輸 10 次（Part II c）",
+    "Y：重傳直到第一次成功（原功能）",
+    "J：重傳直到第三次成功（Part II d）",
+    "比較：X 與 Z（Part II e）",
+    "比較：Y、K、J（Part II e）",
 ]
 
 if "anim_status" not in st.session_state:
@@ -310,7 +310,7 @@ elif mode == "比較：Y、K、J（Part II e）":
 
 else:
     # ========================================================
-    # 5. 單一實驗模式：動畫、音效、收斂圖、KPI、明細、CSV
+    # 5. 單一實驗模式：保留動畫、音效、收斂圖、KPI、明細、CSV
     # ========================================================
     spec = event_spec(mode)
     key = spec["key"]
